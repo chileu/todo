@@ -5,7 +5,9 @@ $(function() {
   // <li> tags
   function taskHtml(task) {
     var checkedStatus = task.done ? "checked" : "";
-    var liElement = '<li><div class="view"><input class="toggle" type="checkbox"' +
+    var liClass = task.done? "completed" : "";
+    var liElement = '<li id="listItem-' + task.id +'" class="' + liClass + '">' +
+    '<div class="view"><input class="toggle" type="checkbox"' +
     " data-id='" + task.id + "'" +
     checkedStatus +
     '><label>' +
@@ -29,6 +31,11 @@ $(function() {
       task: {
         done: doneValue
       }
+    }).success(function(data) {
+      var liHtml = taskHtml(data);          // takes the JS representation of the task and converts to HTML then stores in variable liHtml
+      var $li = $("#listItem-" + data.id);  // build a jQuery selector to extract the HTML element from the page for the list item we need to update
+      $li.replaceWith(liHtml);              // replace HTML of item with new HTML we've built
+      $('.toggle').change(toggleTask);      // re-register the click handler to toggle the items
     });
   }
 
