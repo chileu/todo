@@ -12,7 +12,7 @@ $(function() {
     checkedStatus +
     '><label>' +
     task.title +
-    '</label><div></li>';
+    '</label><button class="destroy"></button><div></li>';
 
     return liElement;
   }
