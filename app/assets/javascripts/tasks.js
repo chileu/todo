@@ -39,6 +39,8 @@ $(function() {
     });
   }
 
+
+
   $.get("/tasks").success( function( data ) {
     var htmlString = "";
 
@@ -50,6 +52,7 @@ $(function() {
     ulTodos.html(htmlString);
 
     $('.toggle').change(toggleTask);
+
 
   });
 
