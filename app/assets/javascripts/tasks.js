@@ -12,7 +12,9 @@ $(function() {
     checkedStatus +
     '><label>' +
     task.title +
-    '</label><button class="destroy"></button><div></li>';
+    '</label><button class="destroy"' +
+    " data-id='" + task.id + "'" +
+    '></button><div></li>';
 
     return liElement;
   }
@@ -39,7 +41,18 @@ $(function() {
     });
   }
 
+  function destroyTask(e) {
+    var itemId = $(e.target).data("id");
 
+    $.ajax({
+      url: "/tasks/" + itemId,
+      type: 'DELETE',
+      success: function(data) {
+        var li = $("#listItem-" + itemId);
+        li.remove();
+        }
+      });
+  }
 
   $.get("/tasks").success( function( data ) {
     var htmlString = "";
@@ -51,8 +64,8 @@ $(function() {
     var ulTodos = $('.todo-list');
     ulTodos.html(htmlString);
 
-    $('.toggle').change(toggleTask);
-
+    $('.toggle').click(toggleTask);
+    $('.destroy').click(destroyTask);
 
   });
 
@@ -68,8 +81,9 @@ $(function() {
        var htmlString = taskHtml(data);
        var ulTodos = $('.todo-list');
        ulTodos.append(htmlString);
-       $('.toggle').click(toggleTask);
        $('.new-todo').val('');
+       $('.toggle').click(toggleTask);
+       $('.destroy').click(destroyTask);
      });
   });
 
