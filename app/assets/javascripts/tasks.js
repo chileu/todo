@@ -38,6 +38,7 @@ $(function() {
       var $li = $("#listItem-" + data.id);  // build a jQuery selector to extract the HTML element from the page for the list item we need to update
       $li.replaceWith(liHtml);              // replace HTML of item with new HTML we've built
       $('.toggle').change(toggleTask);      // re-register the click handler to toggle the items
+      $('.destroy').click(destroyTask);     // re-register the click handler to delete items      
     });
   }
 
